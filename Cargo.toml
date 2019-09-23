@@ -1,6 +1,6 @@
 [package]
 name = "java-desc"
-version = "0.1.0"
+version = "0.1.1"
 description = "A library for parsing java field and method signatures\nEx: \"[[Ljava/lang/Object;\", \"(I[B)Z;\""
 authors = ["powerboat9 <powerboat9.gamer@gmail.com>"]
 edition = "2018"

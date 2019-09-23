@@ -26,10 +26,23 @@ mod tests {
                 base: SingleType::Int,
                 array_cnt: 0
             }],
-            ret: FieldType {
+            ret: Some(FieldType {
                 base: SingleType::Reference(String::from("Network")),
                 array_cnt: 1
-            }
+            })
+        }));
+        assert_eq!(MethodType::parse("([B[[LFoo;I)V"), Some(MethodType {
+            params: vec![FieldType {
+                base: SingleType::Byte,
+                array_cnt: 1
+            }, FieldType {
+                base: SingleType::Reference(String::from("Foo")),
+                array_cnt: 2
+            }, FieldType {
+                base: SingleType::Int,
+                array_cnt: 0
+            }],
+            ret: None
         }))
     }
 }
@@ -53,9 +66,14 @@ named!(field<&str, FieldType>, map!(
     |v: (u8, SingleType)| FieldType {base: v.1, array_cnt: v.0}
 ));
 
+named!(ret<&str, Option<FieldType>>, alt!(
+    map!(field, |v| Some(v)) |
+    map!(char!('V'), |_| None)
+));
+
 named!(method<&str, MethodType>, map!(pair!(
     delimited!(char!('('), many0!(field), char!(')')),
-    field),
+    ret),
     |v| MethodType {params: v.0, ret: v.1}
 ));
 
@@ -110,7 +128,7 @@ impl From<SingleType> for FieldType {
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct MethodType {
     pub params: Vec<FieldType>,
-    pub ret: FieldType
+    pub ret: Option<FieldType>
 }
 
 impl MethodType {
