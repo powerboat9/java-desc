@@ -5,6 +5,11 @@ description = "A library for parsing java field and method signatures\nEx: \"[[L
 authors = ["powerboat9 <powerboat9.gamer@gmail.com>"]
 edition = "2018"
 license = "MIT"
+repository = "https://github.com/powerboat9/java-desc"
+readme = "README.md"
+documentation = "https://docs.rs/java-desc"
+keywords = ["parser", "java"]
+categories = ["parsing"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
